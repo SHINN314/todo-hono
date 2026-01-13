@@ -1,0 +1,11 @@
+# Ignore artifacts:
+/dist
+node_modules
+package.json
+package-lock.json
+tsconfig.json
+tsconfig.eslint.json
+
+# Ignore prisma generated files:
+src/generated
+prisma/migrations
