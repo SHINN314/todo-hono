@@ -14,10 +14,10 @@ importers:
       hono:
         specifier: ^4.11.4
         version: 4.11.4
-      prisma:
-        specifier: ^6.19.1
-        version: 6.19.1
     devDependencies:
+      prisma:
+        specifier: '6'
+        version: 6.19.1
       wrangler:
         specifier: ^4.4.0
         version: 4.58.0
