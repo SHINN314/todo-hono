@@ -10,7 +10,8 @@
     "eslint": "eslint src/**/*.ts",
     "eslint-fix": "eslint src/**/*.ts --fix",
     "format": "prettier --write 'src/**/*.{ts,js,json}'",
-    "lint": "pnpm run eslint && pnpm run check-types"
+    "lint": "pnpm run eslint && pnpm run check-types",
+    "lint:fix": "pnpm run eslint-fix && pnpm run check-types && pnpm run format"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^6.19.1",
