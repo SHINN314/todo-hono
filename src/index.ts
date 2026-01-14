@@ -19,9 +19,9 @@ app.get("/", (c) => {
 app.get("/users", withPrisma, async (c) => {
   const prisma = c.get("prisma");
   const users = await prisma.user.findMany({
-    include: {posts: true},
+    include: { posts: true },
   });
-  return c.json({users})
-})
+  return c.json({ users });
+});
 
 export default app;
