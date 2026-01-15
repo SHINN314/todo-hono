@@ -1,9 +1,27 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import type { PrismaClient } from "./generated/prisma/client";
+import withPrisma from "./lib/prisma";
+import prismaConfig from "../prisma.config";
 
-const app = new Hono()
+type ContextWithPrisma = {
+  Variables: {
+    prisma: PrismaClient;
+  };
+};
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+const app = new Hono<ContextWithPrisma>();
 
-export default app
+app.get("/", (c) => {
+  return c.text("Hello Hono!");
+});
+
+// user get endpoint
+app.get("/users", withPrisma, async (c) => {
+  const prisma = c.get("prisma");
+  const users = await prisma.user.findMany({
+    include: { posts: true },
+  });
+  return c.json({ users });
+});
+
+export default app;
