@@ -1,25 +1,9 @@
-import { Context, Next } from "hono";
-import { PrismaClient } from "../generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from '../generated/prisma/client'
+import { withAccelerate } from '@prisma/extension-accelerate'
 
-const databaseUrl = process.env.DATABASE_URL;
-if (!databaseUrl) {
-  throw new Error("DATABASE_URL is not set");
+export const getPrisma = (database_url: string) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: database_url,
+  }).$extends(withAccelerate())
+  return prisma
 }
-
-const adapter = new PrismaPg({
-  connectionString: databaseUrl,
-});
-
-const prisma = new PrismaClient({
-  adapter,
-});
-
-function withPrisma(c: Context, next: Next) {
-  if (!c.get("prisma")) {
-    c.set("prisma", prisma);
-  }
-  return next();
-}
-
-export default withPrisma;

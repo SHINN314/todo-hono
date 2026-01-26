@@ -16,6 +16,7 @@
   "dependencies": {
     "@prisma/adapter-pg": "^6.19.1",
     "@prisma/client": "^6.19.1",
+    "@prisma/extension-accelerate": "^3.0.1",
     "hono": "^4.11.4"
   },
   "devDependencies": {

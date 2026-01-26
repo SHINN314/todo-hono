@@ -1,23 +1,21 @@
 import { Hono } from "hono";
-import type { PrismaClient } from "./generated/prisma/client";
-import withPrisma from "./lib/prisma";
-import prismaConfig from "../prisma.config";
+import { getPrisma } from "./lib/prisma";
 
-type ContextWithPrisma = {
-  Variables: {
-    prisma: PrismaClient;
+type HonoEnv = {
+  Bindings: {
+    DATABASE_URL: string;
   };
 };
 
-const app = new Hono<ContextWithPrisma>();
+const app = new Hono<HonoEnv>();
 
 app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
 // user get endpoint
-app.get("/users", withPrisma, async (c) => {
-  const prisma = c.get("prisma");
+app.get("/users", async (c) => {
+  const prisma = getPrisma(c.env.DATABASE_URL);
   const users = await prisma.user.findMany({
     include: { posts: true },
   });
